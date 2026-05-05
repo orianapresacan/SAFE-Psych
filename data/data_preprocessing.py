@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
 import argparse
 import csv
 import json
 from pathlib import Path
+
 
 SECTION_COLUMNS = [
     "presenting_symptoms",
@@ -72,11 +74,13 @@ def parse_csv(input_csv: Path):
                     "content": content,
                 })
 
+            # Used for LLM inference.
             data.append({
-                "id": row_id,
+                "sample_id": row_id,
                 "sections": sections,
             })
 
+            # Used for evaluation.
             data_gt.append({
                 "id": row_id,
                 "age_group": clean(row["age_group"]),

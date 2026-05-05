@@ -1,0 +1,3 @@
+No further patient information is available.
+
+Task: Provide a psychiatric diagnosis and the corresponding ICD-10 code only if the available information is sufficient to support a reliable diagnosis. If the available evidence is insufficient, ambiguous, or consistent with multiple plausible diagnoses, explicitly state that you abstain.

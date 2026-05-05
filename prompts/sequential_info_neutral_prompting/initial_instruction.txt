@@ -1,0 +1,6 @@
+Task: Provide a psychiatric diagnosis and the corresponding ICD-10 code.
+
+This is the patient information currently available. More clinical information may still become available.
+
+Patient information:
+{sections}

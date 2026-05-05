@@ -1,0 +1,6 @@
+Task: Provide a diagnosis only if the available evidence is sufficient to support a reliable diagnosis. If important uncertainty remains, or if missing information could change the diagnosis, request additional clinical information. When requesting more information, explicitly state what is missing and, when possible, ask specific follow-up questions that would help resolve the diagnostic uncertainty.
+
+This is the patient information currently available. More clinical information may still become available.
+
+Patient information:
+{sections}

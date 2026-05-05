@@ -1,0 +1,6 @@
+The following additional clinical information has become available based on further assessment. Additional clinical information may still be provided.
+
+Task: Provide a psychiatric diagnosis and the corresponding ICD-10 code.
+
+Patient information:
+{sections}

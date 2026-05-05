@@ -1,5 +1,7 @@
 data/data.csv
 data/samples.json
+data/samples_1.json
 runs/
 evaluations/data_gt.json
 evaluations/multiple_seed_runs/runs_seeds
+__pycache__/

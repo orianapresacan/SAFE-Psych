@@ -1,0 +1,12 @@
+anthropic==0.93.0
+google-genai==1.72.0
+huggingface_hub==0.36.2
+openai==2.31.0
+python-dotenv==1.2.2
+pandas
+numpy
+matplotlib
+scipy
+safetensors==0.7.0
+sentencepiece==0.2.1
+transformers==4.57.6

@@ -1,0 +1,6 @@
+The following additional clinical information has become available based on further assessment. Additional clinical information may still be provided.
+
+Task: If the available evidence is now sufficient, provide a psychiatric diagnosis and the corresponding ICD-10 code. Otherwise, request the specific additional clinical information still needed.
+
+Patient information:
+{sections}

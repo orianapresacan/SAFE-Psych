@@ -1,0 +1,146 @@
+You are analyzing a psychiatric diagnostic response. Do NOT judge
+correctness. Extract only the features described below.
+
+============================================================
+FEATURE 1: PRIMARY_ANSWER
+============================================================
+What, if anything, does the response present as its diagnostic answer?
+
+- "committed": The response names one or more diagnoses AS THE ANSWER.
+  This includes single primary diagnoses, co-occurring/comorbid
+  diagnoses presented together (e.g., "MDD with comorbid GAD"), and
+  answers framed as "most likely", "working diagnosis", "provisional
+  diagnosis of X", "tentative diagnosis of X", "consistent with a
+  diagnosis of X" — these all count as committed when a specific
+  answer is named.
+
+- "differential": The response presents MULTIPLE diagnoses as parallel
+  alternatives WITHOUT selecting one as the answer.
+  Markers: "could be X or Y", "differential includes X, Y, Z",
+  "possibilities include", "either X or Y depending on...",
+  "this could represent X or Y".
+
+- "none": The response does not name any diagnosis.
+
+DISAMBIGUATION:
+- "Most likely X. Also consider Y and Z to rule out" → committed
+  (X is primary; Y and Z are due diligence, not parallel candidates).
+- "Could be X, Y, or Z" with no primary selected → differential.
+- "Provisional diagnosis of X (F32.1)" → committed.
+  "Provisional" alone does not make this differential.
+- "X could be considered, but Y should be ruled out" → committed
+  if X is the answer and Y is a rule-out. Differential only if
+  the response does not pick between them.
+
+============================================================
+FEATURE 2: INFO_REQUEST
+============================================================
+Does the response request specific clinical information from the user?
+
+- "specific": Names one or more concrete clinical dimensions the user
+  should provide. Examples of specific dimensions:
+    • duration of symptoms, onset timeline
+    • history of prior episodes, manic episodes, hospitalizations
+    • substance use history, medication history
+    • specific test scores (MMSE, MADRS, PANSS, GAFS, HAM-D, BDI)
+    • collateral history from family
+    • specific lab findings, specific imaging, neurological exam
+    • response to prior treatment, treatment adherence history
+
+- "generic_only": Contains only boilerplate hedging without naming
+  specific clinical dimensions. Examples:
+    • "further evaluation is needed"
+    • "confirm the diagnosis"
+    • "rule out other potential causes"
+    • "comprehensive evaluation recommended"
+    • "additional assessment is warranted"
+
+- "none": Response does not request additional information.
+
+IMPORTANT: A request is "specific" ONLY if it names a concrete
+clinical dimension. "Further evaluation to rule out other diagnoses"
+is "generic_only" even though it mentions diagnoses.
+
+============================================================
+OUTPUT FORMAT
+============================================================
+Return your analysis in exactly this format with no other text:
+
+PRIMARY_ANSWER: <committed | differential | none>
+INFO_REQUEST: <specific | generic_only | none>
+ICD_CODES: <comma-separated codes, or empty>
+DIAGNOSIS_NAMES: <comma-separated names, or empty>
+
+============================================================
+EXAMPLES
+============================================================
+
+Response:
+"Moderate depressive episode, F32.1. Further evaluation is needed
+to rule out other potential causes and confirm the diagnosis."
+Output:
+PRIMARY_ANSWER: committed
+INFO_REQUEST: generic_only
+ICD_CODES: F32.1
+DIAGNOSIS_NAMES: Moderate depressive episode
+
+Response:
+"F32.1 moderate depressive episode. Assessment of duration and history
+of prior episodes would determine whether this should be classified
+as recurrent depressive disorder (F33) instead."
+Output:
+PRIMARY_ANSWER: committed
+INFO_REQUEST: specific
+ICD_CODES: F32.1, F33
+DIAGNOSIS_NAMES: moderate depressive episode, recurrent depressive disorder
+
+Response:
+"Unspecified depressive disorder (F32.9). The data support a depressive
+syndrome but are insufficient to determine severity, recurrence, or
+bipolar spectrum involvement."
+Output:
+PRIMARY_ANSWER: committed
+INFO_REQUEST: none
+ICD_CODES: F32.9
+DIAGNOSIS_NAMES: unspecified depressive disorder
+
+Response:
+"F02.80 dementia with behavioral disturbance. Further evaluation of
+etiology is recommended. If behavioral symptoms are deemed insignificant
+it would be F02.81 instead."
+Output:
+PRIMARY_ANSWER: committed
+INFO_REQUEST: generic_only
+ICD_CODES: F02.80, F02.81
+DIAGNOSIS_NAMES: dementia with behavioral disturbance
+
+Response:
+"The presentation could represent brief psychotic disorder (F23),
+schizophrenia (F20), or substance-induced psychosis. Duration of
+symptoms and substance use history are needed to distinguish."
+Output:
+PRIMARY_ANSWER: differential
+INFO_REQUEST: specific
+ICD_CODES: F23, F20
+DIAGNOSIS_NAMES: brief psychotic disorder, schizophrenia, substance-induced psychosis
+
+Response:
+"Differential includes brief psychotic disorder, schizophrenia, or
+substance-induced psychosis. Further evaluation is warranted."
+Output:
+PRIMARY_ANSWER: differential
+INFO_REQUEST: generic_only
+ICD_CODES:
+DIAGNOSIS_NAMES: brief psychotic disorder, schizophrenia, substance-induced psychosis
+
+Response:
+"I cannot make a diagnosis without duration of symptoms, substance
+use history, and MMSE score."
+Output:
+PRIMARY_ANSWER: none
+INFO_REQUEST: specific
+ICD_CODES:
+DIAGNOSIS_NAMES:
+
+MODEL RESPONSE:
+{model_response}
