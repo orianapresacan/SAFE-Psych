@@ -52,7 +52,6 @@ def main():
             "gemma-3-4b",
             "gemma-3-12b",
             "gemma-3-27b",
-            "gemma-4-31b",
             "medgemma-27b",
             "med42-8b",
             "qwen_3-32b",
@@ -86,8 +85,6 @@ def main():
             "full_info_abstention_aware",
             "sequential_info_neutral_prompting",
             "sequential_info_abstention_aware",
-            "sequential_info_clarification_only",
-            "structured_actions",
         ],
     )
     parser.add_argument("--data_path", default="data/samples.json")
