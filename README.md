@@ -83,7 +83,7 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 pip install -r requirements_gpu.txt
 ```
 
-Adjust the PyTorch install command for your CUDA/platform as needed: https://pytorch.org/get-started/locally/
+Adjust the PyTorch install command for your CUDA/platform as needed using the [official PyTorch installation guide](https://pytorch.org/get-started/locally/).
 
 
 ## Running inference
@@ -100,14 +100,15 @@ python main.py \
 ```
 
 
-Available strategies are:
-- full_info_no_abstention
-- full_info_abstention_aware
-- sequential_info_neutral_prompting
-- sequential_info_abstention_aware
+Available **strategies** are:
+```text
+full_info_no_abstention
+full_info_abstention_aware
+sequential_info_neutral_prompting
+sequential_info_abstention_aware
+```
 
-
-Available target models:
+Available **target models**:
 ```text
 llama3.1-8b
 mistral-small-3.1-24B
@@ -121,6 +122,11 @@ gpt-5.4
 claude-opus-4.6
 gemini-2.5-flash-no-thinking
 gemini-2.5-flash-thinking
+```
+
+Available **judge model**:
+```text
+gpt-5.4
 ```
 
 ### Outputs
