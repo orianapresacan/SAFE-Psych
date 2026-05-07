@@ -36,12 +36,16 @@ cd Safe-Psych
 unzip SAFE-Psych-32C1.zip
 ```
 
-
 ## Environment
 
-We provide installation options with `uv`, `pip`, and `conda`.
+Choose one of the following setups:
 
-### Option 1: uv
+- **Base environment:** for data preprocessing, metric computation, plotting, and API-based model calls.
+- **GPU environment:** for open-weight model local inference. This includes the base environment plus GPU dependencies such as `vllm`.
+
+### Base environment
+
+#### Option 1: uv
 
 ```bash
 uv venv --python 3.11
@@ -49,22 +53,67 @@ source .venv/bin/activate  # Windows: .venv\Scripts\Activate.ps1
 uv pip install -r requirements.txt
 ```
 
-### Option 2: conda
+#### Option 2: conda
+
 ```bash
 conda env create -f environment.yml
 conda activate safe_psych
 ```
 
-### Option 3: pip
+#### Option 3: pip
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-The core environment is sufficient for data preprocessing, metric computation, plotting, and API-based model calls.
+### GPU environment
 
-### API keys
+Use this setup if you want to run open-weight models locally. 
+
+Adjust the PyTorch install command for your CUDA/platform using the [official PyTorch installation guide](https://pytorch.org/get-started/locally/).
+
+#### Option 1: uv
+
+```bash
+uv venv --python 3.11
+source .venv/bin/activate  # Windows: .venv\Scripts\Activate.ps1
+
+# First install PyTorch with the command recommended for your CUDA/platform:
+uv pip install torch torchvision torchaudio
+
+uv pip install -r requirements_gpu.txt
+```
+
+#### Option 2: conda
+
+```bash
+conda create -n safe_psych python=3.11 pip
+conda activate safe_psych
+
+# First install PyTorch with the command recommended for your CUDA/platform:
+pip install torch torchvision torchaudio
+
+pip install -r requirements_gpu.txt
+```
+
+#### Option 3: pip
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\Activate.ps1
+
+# First install PyTorch with the command recommended for your CUDA/platform:
+pip install torch torchvision torchaudio
+
+pip install -r requirements_gpu.txt
+```
+
+`requirements_gpu_lock.txt` was generated with `uv` and pins the exact Python dependency versions for the GPU environment, including the base requirements and `vllm`, to ensure dependency compatibility and reproducible installation.
+
+## API keys
+
 For closed-source models, export the relevant API keys before running inference:
 
 ```bash
@@ -72,19 +121,6 @@ export OPENAI_API_KEY=...
 export ANTHROPIC_API_KEY=...
 export GEMINI_API_KEY=...
 ```
-
-
-### GPU inference for open-weight models
-
-GPU inference requires a CUDA-compatible PyTorch build and `vllm`:
-
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip install -r requirements_gpu.txt
-```
-
-Adjust the PyTorch install command for your CUDA/platform as needed using the [official PyTorch installation guide](https://pytorch.org/get-started/locally/).
-
 
 ## Running inference
 
@@ -95,7 +131,7 @@ python main.py \
   --model gemma-3-4b \
   --judge gpt-5.4 \
   --strategy full_info_no_abstention \
-  --data_path data/samples_1.json \
+  --data_path data/samples.json \
   --seed 123
 ```
 
